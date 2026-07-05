@@ -1,4 +1,3 @@
-load_path : 'D://1-2. MvTec_Anomaly//1.Bottel'
 save_path : 'D://0. Model_Save_Folder'
 
 traincsvfile_path : "D:/1. DataSet/2-1. Pascal/VOC2/VOC2012/VOC2012/annotations_Train.csv"
@@ -8,8 +7,12 @@ LABEL_DIR : "D:/1. DataSet/2-1. Pascal/VOC2/VOC2012/VOC2012/MakedLabels"
 
 epoch : 10000
 patience : 1000
-batch_size : 1
+batch_size : 32
 num_class : 20
 
 IMAGE_SIZE : 416
 scale : 1.1
+
+# DETR 전용 설정
+DETR_IMAGE_SIZE : 800
+DETR_BATCH_SIZE : 16

@@ -1,7 +1,7 @@
 import os
 import torch
 import matplotlib.pyplot as plt
-from G_Model_Zoo.Models.ObjectDetection.Util.Utils import mAP, get_bboxes
+from I_Model_Zoo.Models.ObjectDetection.Util.Utils import mAP, get_bboxes
 
 # 기능 : 실시간 plt 업데이트, 학습 정보 저장
 # 필요 기능 : 그래프 생성(O), 그래프 업데이트(O), 모델 저장(O), 학습 정보 저장(O), 결과 정보 저장(O), 그래프 이미지 저장(O)

@@ -28,8 +28,7 @@ def pascal2yolo(xml_path):
     labels, bboxes = [], []
     for obj in soup.select('object'):
         name = obj.select('name')[0].text
-        # 'aeroplane'만 추출
-        if name != 'aeroplane':
+        if name not in label_set:
             continue
         bbox_tag = obj.select('bndbox')[0]
         bbox = (
@@ -66,8 +65,10 @@ convert_voc_to_yolo(xml_folder, label_folder)
 img_folder = 'D:/1. DataSet/2-1. Pascal/VOC2/VOC2012/VOC2012/JPEGImages'
 csv_path = 'D:/1. DataSet/2-1. Pascal/VOC2/VOC2012/VOC2012/annotations.csv'
 
-img_files = sorted([f for f in os.listdir(img_folder) if f.lower().endswith(('.jpg', '.jpeg', '.png'))])
-label_files = sorted([f for f in os.listdir(label_folder) if f.endswith('.txt')])
+import random
+
+img_files   = sorted([f for f in os.listdir(img_folder)   if f.lower().endswith(('.jpg', '.jpeg', '.png'))])
+label_files = set([f for f in os.listdir(label_folder) if f.endswith('.txt')])
 
 rows = []
 for img in img_files:
@@ -76,6 +77,17 @@ for img in img_files:
     if label in label_files:
         rows.append({'image': img, 'label': label})
 
+random.shuffle(rows)
+split = int(len(rows) * 0.9)
+train_rows = rows[:split]
+test_rows  = rows[split:]
+
+train_csv = 'D:/1. DataSet/2-1. Pascal/VOC2/VOC2012/VOC2012/annotations_Train.csv'
+test_csv  = 'D:/1. DataSet/2-1. Pascal/VOC2/VOC2012/VOC2012/annotations_Test.csv'
+
+pd.DataFrame(train_rows).to_csv(train_csv, index=False)
+pd.DataFrame(test_rows).to_csv(test_csv,  index=False)
+print(f"Train: {len(train_rows)}장, Test: {len(test_rows)}장")
 df = pd.DataFrame(rows)
 df.to_csv(csv_path, index=False)
 
